@@ -9,7 +9,7 @@
 <body>
   <form class="" action="minichat_post.php" method="post">
     <label for="pseudo">Votre pseudo<input type="text" name="pseudo" value=""></label><br>
-    <label for="message">Votre message <textarea name="message" rows="8" cols="80"></textarea></label><br>
+    <label for="message">Votre message <textarea type="text" name="message" rows="8" cols="80"></textarea></label><br>
     <input type="submit" name="envoyer" value="envoyer">
   </form>
   <main>
@@ -27,10 +27,7 @@ catch(Exception $e)
 
 
 // faire une requête pour afficher les 10 derniers articles
-$marequete = $bdd->prepare('SELECT pseudo = :pseudo, message = :message FROM minichat ORDER BY ID DESC LIMIT 0, 10') or die(print_r($bdd->errorInfo()));
-$marequete->execute(array('pseudo' =>$_POST['pseudo'], 'message'=> $_POST['message']));
-
-
+$marequete = $bdd->query('SELECT pseudo, message FROM minichat ORDER BY ID LIMIT 0, 10') or die(print_r($bdd->errorInfo()));
 
 // On affiche chaque entrée une à une
 while ($message = $marequete->fetch())

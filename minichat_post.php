@@ -10,7 +10,7 @@ catch(Exception $e)
 }
 
 $req = $bdd->prepare('INSERT INTO minichat (pseudo, message) VALUES (?, ?)');
-$req->execute(array($_GET['pseudo'],$_GET['message']));
+$req->execute(array($_POST['pseudo'],$_POST['message']));
 
 $req->closeCursor();
 
