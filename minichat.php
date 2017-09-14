@@ -18,7 +18,7 @@
 // OK mettre la requête pour se connecter à la base de données
 try
 {
-	$bdd = new PDO('mysql:host=localhost;dbname=minichat;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+	$bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 }
 catch(Exception $e)
 {
@@ -26,7 +26,24 @@ catch(Exception $e)
 }
 
 
-// faire une requête pour afficher les 10 derniers articles 
+// faire une requête pour afficher les 10 derniers articles
+$marequete = $bdd->prepare('SELECT pseudo = :pseudo, message = :message FROM minichat ORDER BY ID DESC LIMIT 0, 10') or die(print_r($bdd->errorInfo()));
+$marequete->execute(array('pseudo' =>$_POST['pseudo'], 'message'=> $_POST['message']));
+
+
+
+// On affiche chaque entrée une à une
+while ($message = $marequete->fetch())
+{
+?>
+<div class="">
+
+<h3> <?= $message['pseudo']?></h3>
+<p> <?= $message['message']?> </p>
+</div>
+<?php
+}
+
 
 // OK fermer la requete
 $marequete->closeCursor();
