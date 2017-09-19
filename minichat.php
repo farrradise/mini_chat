@@ -27,7 +27,7 @@ catch(Exception $e)
 
 
 // faire une requête pour afficher les 10 derniers articles
-$marequete = $bdd->query('SELECT pseudo, message FROM minichat ORDER BY ID LIMIT 0, 10') or die(print_r($bdd->errorInfo()));
+$marequete = $bdd->query('SELECT pseudo, message FROM minichat ORDER BY ID DESC LIMIT 0, 10') or die(print_r($bdd->errorInfo()));
 
 // On affiche chaque entrée une à une
 while ($message = $marequete->fetch())
@@ -35,8 +35,7 @@ while ($message = $marequete->fetch())
 ?>
 <div class="">
 
-<h3> <?= $message['pseudo']?></h3>
-<p> <?= $message['message']?> </p>
+<p> <strong> <?= htmlspecialchars($message['pseudo'])?>  :</strong> <?= htmlspecialchars($message['message'])?> </p>
 </div>
 <?php
 }
